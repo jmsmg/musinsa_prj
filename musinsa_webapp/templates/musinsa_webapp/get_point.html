@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>MUSINSA PROJECT</title>
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+
+    <!--상단에 네이게이션 바 -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+          <a class="navbar-brand" href="{% url 'musinsa_webapp:index' %}">MUSINSA STORE</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                  <!-- <li class="nav-item"><a class="nav-link active" aria-current="page" href="http://127.0.0.1:8000/home">Home</a></li> -->
+                  <li class="nav-item"><a class="nav-link" href="{% url 'musinsa_webapp:index' %}">Home</a></li>
+                  <li class="nav-item"><a class="nav-link active" href="{% url 'musinsa_webapp:get_point' %}">Review</a></li>
+                  <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Admin</a></li>
+              </ul>
+          </div>
+      </div>
+    </nav>
+
+  <body>
+
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Upload</button>
+    </form>
+
+    {% if post %}
+      <!-- post.document : ImageUploadModel Class에 선언되어 있는 "document"에 해당 (브라우저 확인) -->
+      <img src="{{ post.document.url }}">
+      <p>Uploaded file @ : <a href="{{ post.document.url }}">{{ post.document }}</a></p>
+    {% endif %}
+    <h1>{{ predict_result }}</h1>
+
+    <p><a href="{% url 'musinsa_webapp:get_point' %}">Return to home</a></p>
+
+</body>
+
+</html>
